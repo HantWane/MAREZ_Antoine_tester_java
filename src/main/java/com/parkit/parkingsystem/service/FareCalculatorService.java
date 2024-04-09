@@ -23,6 +23,12 @@ public class FareCalculatorService {
         // Conversion en minutes
         double durationMinutes = (outTimeMillis - inTimeMillis) / 60000.0;
 
+        // vérifier si la durée est < 30 minutes, retourner prix = 0 si c'est le cas
+        if (durationMinutes < 30) {
+            ticket.setPrice(0);
+            return;
+        }
+
 
         switch (ticket.getParkingSpot().getParkingType()){
             case CAR: {
