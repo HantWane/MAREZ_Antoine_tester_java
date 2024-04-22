@@ -5,36 +5,65 @@ import com.parkit.parkingsystem.model.Ticket;
 
 <span class="fc" id="L6">public class FareCalculatorService {</span>
 
-    public void calculateFare(Ticket ticket){
-<span class="pc bpc" id="L9" title="1 of 4 branches missed.">        if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){</span>
-<span class="fc" id="L10">            throw new IllegalArgumentException(&quot;Out time provided is incorrect:&quot;+ticket.getOutTime().toString());</span>
+    // Constante pour la réduction de tarif
+    private static final double DISCOUNT_RATE = 0.95;
+
+    // Méthode pour calculer le tarif du ticket
+    public void calculateFare(Ticket ticket) {
+        // Appelle la méthode de calcul avec le paramètre de réduction par défaut à false
+<span class="fc" id="L14">        calculateFare(ticket, false);</span>
+<span class="fc" id="L15">    }</span>
+
+    // Méthode pour calculer le tarif du ticket avec la possibilité de spécifier une réduction
+    public void calculateFare(Ticket ticket, boolean discount) {
+        // Validation du ticket pour s'assurer que les données sont cohérentes
+<span class="fc" id="L20">        validateTicket(ticket);</span>
+        // Calcul de la durée de stationnement en minutes
+<span class="fc" id="L22">        double durationMinutes = calculateDurationInMinutes(ticket);</span>
+        // Calcul du tarif en fonction du type de véhicule
+<span class="fc" id="L24">        double fareRate = calculateFareRate(ticket);</span>
+        // Si la durée de stationnement est inférieure ou égale à 30 minutes, le tarif est fixé à zéro
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (durationMinutes &lt;= 30) {</span>
+<span class="fc" id="L27">        ticket.setPrice(0);</span>
+<span class="fc" id="L28">        return;</span>
         }
-
-        //int inHour = ticket.getInTime().getHours();
-        //int outHour = ticket.getOutTime().getHours();
-
-<span class="fc" id="L16">        long inTimeMillis = ticket.getInTime().getTime();</span>
-<span class="fc" id="L17">        long outTimeMillis = ticket.getOutTime().getTime();</span>
-
-
-        //TODO: Some tests are failing here. Need to check if this logic is correct
-        //int duration = outHour - inHour;
-
-        // Conversion en minutes
-<span class="fc" id="L24">        double durationMinutes = (outTimeMillis - inTimeMillis) / 60000.0;</span>
-
-
-<span class="pc bpc" id="L27" title="1 of 3 branches missed.">        switch (ticket.getParkingSpot().getParkingType()){</span>
-            case CAR: {
-<span class="fc" id="L29">                ticket.setPrice(durationMinutes * Fare.CAR_RATE_PER_HOUR / 60); // Convertir les tarifs horaires en minutes</span>
-<span class="fc" id="L30">                break;</span>
-            }
-            case BIKE: {
-<span class="fc" id="L33">                ticket.setPrice(durationMinutes * Fare.BIKE_RATE_PER_HOUR / 60);</span>
-<span class="fc" id="L34">                break;</span>
-            }
-<span class="nc" id="L36">            default: throw new IllegalArgumentException(&quot;Unkown Parking Type&quot;);</span>
+        // Si la réduction est activée, applique le taux de réduction
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (discount) {</span>
+<span class="fc" id="L32">            fareRate *= DISCOUNT_RATE;</span>
         }
-<span class="fc" id="L38">    }</span>
+        // Calcul du prix total du ticket
+<span class="fc" id="L35">        ticket.setPrice(durationMinutes * fareRate / 60);</span>
+<span class="fc" id="L36">    }</span>
+
+    // Méthode pour valider le ticket et ses données
+    private void validateTicket(Ticket ticket) {
+        // Vérifie si l'heure de sortie est valide et postérieure à l'heure d'entrée
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        if (ticket.getOutTime() == null || ticket.getOutTime().before(ticket.getInTime())) {</span>
+            // Lève une exception si l'heure de sortie est invalide
+<span class="fc" id="L43">            throw new IllegalArgumentException(&quot;Invalid out time provided: &quot; + ticket.getOutTime());</span>
+        }
+<span class="fc" id="L45">    }</span>
+
+    // Méthode pour calculer la durée de stationnement en minutes
+    private double calculateDurationInMinutes(Ticket ticket) {
+<span class="fc" id="L49">        long inTimeMillis = ticket.getInTime().getTime();</span>
+<span class="fc" id="L50">        long outTimeMillis = ticket.getOutTime().getTime();</span>
+<span class="fc" id="L51">        return (outTimeMillis - inTimeMillis) / 60000.0;</span>
+    }
+
+    // Méthode pour calculer le tarif en fonction du type de véhicule
+    private double calculateFareRate(Ticket ticket) {
+<span class="pc bpc" id="L56" title="1 of 3 branches missed.">        switch (ticket.getParkingSpot().getParkingType()) {</span>
+            
+            case CAR:
+<span class="fc" id="L59">                return Fare.CAR_RATE_PER_HOUR;</span>
+            
+            case BIKE:
+<span class="fc" id="L62">                return Fare.BIKE_RATE_PER_HOUR;</span>
+            
+            default:
+<span class="nc" id="L65">                throw new IllegalArgumentException(&quot;Unknown Parking Type&quot;);</span>
+        }
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
