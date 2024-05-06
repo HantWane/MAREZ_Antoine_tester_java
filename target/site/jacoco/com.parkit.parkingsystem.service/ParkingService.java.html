@@ -68,7 +68,7 @@ public class ParkingService {
     public void processIncomingVehicle() {
         try{
 <span class="fc" id="L70">            ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();</span>
-<span class="pc bpc" id="L71" title="2 of 4 branches missed.">            if(parkingSpot !=null &amp;&amp; parkingSpot.getId() &gt; 0){</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">            if(parkingSpot !=null &amp;&amp; parkingSpot.getId() &gt; 0){</span>
 <span class="fc" id="L72">                String vehicleRegNumber = getVehichleRegNumber();</span>
 <span class="fc" id="L73">                parkingSpot.setAvailable(false);</span>
 <span class="fc" id="L74">                parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark its availability as false</span>
@@ -171,8 +171,8 @@ public class ParkingService {
 <span class="fc" id="L171">            } else {</span>
 <span class="fc" id="L172">                System.out.println(&quot;Unable to update ticket information. Error occurred&quot;);</span>
             }
-<span class="pc" id="L174">        } catch (Exception e) {</span>
-<span class="nc" id="L175">            logger.error(&quot;Unable to process exiting vehicle&quot;, e);</span>
+<span class="fc" id="L174">        } catch (Exception e) {</span>
+<span class="fc" id="L175">            logger.error(&quot;Unable to process exiting vehicle&quot;, e);</span>
         }
 <span class="fc" id="L177">    }</span>
     
