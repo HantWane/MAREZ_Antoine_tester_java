@@ -5,62 +5,59 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
-    // Constante pour la réduction de tarif
+    // Constant for the discount rate
     private static final double DISCOUNT_RATE = 0.95;
 
-    // Méthode pour calculer le tarif du ticket
+    // Method to calculate ticket fare
     public void calculateFare(Ticket ticket) {
-        // Appelle la méthode de calcul avec le paramètre de réduction par défaut à false
+        // Call calculate method with default discount parameter set to false
         calculateFare(ticket, false);
     }
 
-    // Méthode pour calculer le tarif du ticket avec la possibilité de spécifier une réduction
+    // Method to calculate ticket fare with the option to specify a discount
     public void calculateFare(Ticket ticket, boolean discount) {
-        // Validation du ticket pour s'assurer que les données sont cohérentes
+        // Validate ticket to ensure data consistency
         validateTicket(ticket);
-        // Calcul de la durée de stationnement en minutes
+        // Calculate parking duration in minutes
         double durationMinutes = calculateDurationInMinutes(ticket);
-        // Calcul du tarif en fonction du type de véhicule
+        // Calculate fare rate based on vehicle type
         double fareRate = calculateFareRate(ticket);
-        // Si la durée de stationnement est inférieure ou égale à 30 minutes, le tarif est fixé à zéro
+        // If parking duration is less than or equal to 30 minutes, fare is set to zero
         if (durationMinutes <= 30) {
-        ticket.setPrice(0);
-        return;
+            ticket.setPrice(0);
+            return;
         }
-        // Si la réduction est activée, applique le taux de réduction
+        // If discount is enabled, apply discount rate
         if (discount) {
             fareRate *= DISCOUNT_RATE;
         }
-        // Calcul du prix total du ticket
+        // Calculate total price of the ticket
         ticket.setPrice(durationMinutes * fareRate / 60);
     }
 
-    // Méthode pour valider le ticket et ses données
+    // Method to validate the ticket and its data
     private void validateTicket(Ticket ticket) {
-        // Vérifie si l'heure de sortie est valide et postérieure à l'heure d'entrée
+        // Check if out time is valid and after the in time
         if (ticket.getOutTime() == null || ticket.getOutTime().before(ticket.getInTime())) {
-            // Lève une exception si l'heure de sortie est invalide
+            // Throw exception if out time is invalid
             throw new IllegalArgumentException("Invalid out time provided: " + ticket.getOutTime());
         }
     }
 
-    // Méthode pour calculer la durée de stationnement en minutes
+    // Method to calculate parking duration in minutes
     private double calculateDurationInMinutes(Ticket ticket) {
         long inTimeMillis = ticket.getInTime().getTime();
         long outTimeMillis = ticket.getOutTime().getTime();
         return (outTimeMillis - inTimeMillis) / 60000.0;
     }
 
-    // Méthode pour calculer le tarif en fonction du type de véhicule
+    // Method to calculate fare rate based on vehicle type
     private double calculateFareRate(Ticket ticket) {
         switch (ticket.getParkingSpot().getParkingType()) {
-            
             case CAR:
                 return Fare.CAR_RATE_PER_HOUR;
-            
             case BIKE:
                 return Fare.BIKE_RATE_PER_HOUR;
-            
             default:
                 throw new IllegalArgumentException("Unknown Parking Type");
         }

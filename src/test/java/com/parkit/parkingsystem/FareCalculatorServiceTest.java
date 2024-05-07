@@ -132,7 +132,7 @@ public class FareCalculatorServiceTest {
 
     @Test
 public void should_CalculateFareForCarWithLessThan30MinutesParkingTime() {
-    // Créer un objet Date représentant le temps d'entrée il y a moins de 30 minutes
+    // Create a Date object representing the entry time less than 30 minutes ago
     Date inTime = new Date();
     inTime.setTime( System.currentTimeMillis() - (29 * 60 * 1000) );
     Date outTime = new Date();
@@ -145,13 +145,13 @@ public void should_CalculateFareForCarWithLessThan30MinutesParkingTime() {
 
     fareCalculatorService.calculateFare(ticket);
 
-    // Vérifier si le prix calculé est égal à 0
+    // Check if the calculated price is equal to 0
     assertEquals(0, ticket.getPrice());
     }
 
     @Test
     public void should_CalculateFareForBikeWithLessThan30MinutesParkingTime() {
-        // Créer un objet Date représentant le temps d'entrée il y a moins de 30 minutes
+        // Create a Date object representing the entry time less than 30 minutes ago
         Date inTime = new Date();
         inTime.setTime( System.currentTimeMillis() - (29 * 60 * 1000) );
         Date outTime = new Date();
@@ -164,13 +164,13 @@ public void should_CalculateFareForCarWithLessThan30MinutesParkingTime() {
     
         fareCalculatorService.calculateFare(ticket);
     
-        // Vérifier si le prix calculé est égal à 0
+        // Check if the calculated price is equal to 0
         assertEquals(0, ticket.getPrice());
         }
 
         @Test
         public void should_CalculateFareForCarWithDiscount() {
-            // Créer un objet Date représentant le temps d'entrée
+            // Create a Date object representing the input time
             Date inTime = new Date();
             inTime.setTime( System.currentTimeMillis() - (60 * 60 * 1000) );
             Date outTime = new Date();
@@ -182,25 +182,25 @@ public void should_CalculateFareForCarWithLessThan30MinutesParkingTime() {
             ticket.setOutTime(outTime);
             ticket.setParkingSpot(parkingSpot);
         
-            // Définir le paramètre de réduction sur true
+            // Set discount parameter to true
             ticket.setDiscount(true);
         
             fareCalculatorService.calculateFare(ticket, true);
         
-            // Calculer le tarif plein pour une voiture avec une durée de stationnement supérieure à 30 minutes
-            double fullFare = (outTime.getTime() - inTime.getTime()) * Fare.CAR_RATE_PER_HOUR / (1000 * 60 * 60); // Convertir en heures
+            // Calculate the full price for a car with a parking time greater than 30 minutes
+            double fullFare = (outTime.getTime() - inTime.getTime()) * Fare.CAR_RATE_PER_HOUR / (1000 * 60 * 60); // Convert on hours
         
-            // Calculer le prix attendu avec la réduction de 5%
+            // Calculate the expected price with the 5% reduction
             double expectedPrice = fullFare * 0.95;
         
-            // Vérifier si le prix calculé est égal à 95% du tarif plein
-            assertEquals(expectedPrice, ticket.getPrice(), 0.01); // Utilisation de delta pour gérer les écarts minimes dus aux arrondis
+            // Check if the calculated price is equal to 95% of the full price
+            assertEquals(expectedPrice, ticket.getPrice(), 0.01); // Using delta to handle small deviations due to rounding
         }
 
 
         @Test
         public void should_CalculateFareForBikeWithDiscount() {
-            // Créer un objet Date représentant le temps d'entrée
+            // Create a Date object representing the input time
             Date inTime = new Date();
             inTime.setTime( System.currentTimeMillis() - (60 * 60 * 1000) );
             Date outTime = new Date();
@@ -212,19 +212,19 @@ public void should_CalculateFareForCarWithLessThan30MinutesParkingTime() {
             ticket.setOutTime(outTime);
             ticket.setParkingSpot(parkingSpot);
         
-            // Définir le paramètre de réduction sur true
+            // Set discount parameter to true
             ticket.setDiscount(true);
         
             fareCalculatorService.calculateFare(ticket, true);
         
-            // Calculer le tarif plein pour une voiture avec une durée de stationnement supérieure à 30 minutes
-            double fullFare = (outTime.getTime() - inTime.getTime()) * Fare.CAR_RATE_PER_HOUR / (1000 * 60 * 60); // Convertir en heures
+            // Calculate the full price for a car with a parking time greater than 30 minutes
+            double fullFare = (outTime.getTime() - inTime.getTime()) * Fare.CAR_RATE_PER_HOUR / (1000 * 60 * 60); // Convert on hours
         
-            // Calculer le prix attendu avec la réduction de 5%
+            // Calculate the expected price with the 5% reduction
             double expectedPrice = fullFare * 0.95;
         
-            // Vérifier si le prix calculé est égal à 95% du tarif plein
-            assertEquals(expectedPrice, ticket.getPrice(), 0.01); // Utilisation de delta pour gérer les écarts minimes dus aux arrondis
+            // Check if the calculated price is equal to 95% of the full price
+            assertEquals(expectedPrice, ticket.getPrice(), 0.01); // Using delta to handle small deviations due to rounding
         }
         
 

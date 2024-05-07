@@ -82,13 +82,12 @@ public class ParkingServiceTest {
 
          @Test
             public void processExitingVehicleTest(){
-            // Appel de la méthode à tester
             parkingService.processExitingVehicle();
 
-            // Vérification que la méthode updateParking est appelée une fois
+            // Check method updateParking is called once
             verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 
-            // Vérification que la méthode getNbTicket est appelée une fois
+            // Check method getNbTicket is called once
             verify(ticketDAO, Mockito.times(1)).getNbTicket("ABCDEF");
 
             verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
@@ -167,19 +166,14 @@ public class ParkingServiceTest {
     @Test
     public void processExitingVehicleExceptionHandling() {
         try {
-            // Setup
             when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
             when(ticketDAO.getNbTicket("ABCDEF")).thenThrow(new RuntimeException("Test Exception"));
-
-            // Execution
+            
             parkingService.processExitingVehicle();
 
-            // Verification
-            // Add verification for logs or any expected behavior
         } catch (Exception e) {
             fail("Exception should be handled in the method");
         }
     }
-
 
 }
