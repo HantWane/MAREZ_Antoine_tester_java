@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -150,6 +152,33 @@ public class ParkingServiceTest {
         parkingService.getNextParkingNumberIfAvailable();
 
         verify(inputReaderUtil, Mockito.times(1)).readSelection();
+    }
+
+    
+    @Test
+    public void testGetNextParkingNumberIfAvailableForBike() {
+        when(inputReaderUtil.readSelection()).thenReturn(2);
+
+        ParkingType result = parkingService.getVehichleType();
+
+        assertEquals(ParkingType.BIKE, result);
+    }
+
+    @Test
+    public void processExitingVehicleExceptionHandling() {
+        try {
+            // Setup
+            when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+            when(ticketDAO.getNbTicket("ABCDEF")).thenThrow(new RuntimeException("Test Exception"));
+
+            // Execution
+            parkingService.processExitingVehicle();
+
+            // Verification
+            // Add verification for logs or any expected behavior
+        } catch (Exception e) {
+            fail("Exception should be handled in the method");
+        }
     }
 
 
