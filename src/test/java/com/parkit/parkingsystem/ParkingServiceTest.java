@@ -34,30 +34,10 @@ public class ParkingServiceTest {
     @Mock
     private static TicketDAO ticketDAO;
 
-    /* @BeforeEach
-    private void setUpPerTest() {
-        try {
-            when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
-
-            ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-            Ticket ticket = new Ticket();
-            ticket.setInTime(new Date(System.currentTimeMillis() - (60*60*1000)));
-            ticket.setParkingSpot(parkingSpot);
-            ticket.setVehicleRegNumber("ABCDEF");
-            when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
-            when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
-
-            lenient().when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
-            when(ticketDAO.getNbTicket("ABCDEF")).thenReturn(1);
-
-            parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw  new RuntimeException("Failed to set up test mock objects");
-        }
-    }
-    */
-
+    /**
+     * Sets up the test environment before each test.
+     * This includes configuring mock objects for the parking service and its dependencies.
+     */
     @BeforeEach
     private void setUpPerTest() {
         try {
@@ -80,6 +60,10 @@ public class ParkingServiceTest {
         }
     }
 
+    /**
+     * Tests the process of exiting a vehicle from the parking system.
+     * This includes updating the parking spot and ticket information.
+     */
          @Test
             public void processExitingVehicleTest(){
             parkingService.processExitingVehicle();
@@ -93,8 +77,12 @@ public class ParkingServiceTest {
             verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
         }
 
+        /**
+     * Tests the process of incoming a vehicle into the parking system.
+     * This includes selecting a parking spot, saving the ticket, and updating the parking spot.
+     */
         @Test
-    public void testProcessIncomingVehicle(){
+        public void testProcessIncomingVehicle(){
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
         when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
@@ -110,6 +98,10 @@ public class ParkingServiceTest {
         verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
     }
         
+     /**
+     * Tests the process of exiting a vehicle from the parking system when unable to update ticket information.
+     * This scenario checks if the method handles the inability to update ticket information gracefully.
+     */
     @Test
     public void processExitingVehicleTestUnableUpdate(){
         when(ticketDAO.getNbTicket("ABCDEF")).thenReturn(1);
@@ -122,6 +114,11 @@ public class ParkingServiceTest {
         verify(ticketDAO, Mockito.times(1)).updateTicket(any(Ticket.class));
     }
 
+/**
+     * Tests the retrieval of the next available parking number for a vehicle.
+     * This includes selecting the vehicle type and obtaining the next available parking spot.
+     */
+
     @Test
     public void testGetNextParkingNumberIfAvailable(){
         when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -132,6 +129,11 @@ public class ParkingServiceTest {
         verify(inputReaderUtil,Mockito.times(1)).readSelection();
         verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
     }
+
+/**
+     * Tests the scenario where no parking number is found available for a vehicle.
+     * This scenario checks if the method handles the absence of available parking spots gracefully.
+     */
 
     @Test
     public void testGetNextParkingNumberIfAvailableParkingNumberNotFound(){
@@ -144,6 +146,11 @@ public class ParkingServiceTest {
         verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
     }
 
+
+     /**
+     * Tests the scenario where an invalid parking number is selected for a vehicle.
+     * This scenario checks if the method handles incorrect user input gracefully.
+     */
     @Test
     public void testGetNextParkingNumberIfAvailableParkingNumberWrongArgument(){
         when(inputReaderUtil.readSelection()).thenReturn(3);
@@ -153,7 +160,10 @@ public class ParkingServiceTest {
         verify(inputReaderUtil, Mockito.times(1)).readSelection();
     }
 
-    
+    /**
+ * Tests the retrieval of the next available parking number for a bike.
+ * This includes simulating the selection of the bike type and obtaining the next available parking spot.
+ */
     @Test
     public void testGetNextParkingNumberIfAvailableForBike() {
         when(inputReaderUtil.readSelection()).thenReturn(2);
@@ -162,7 +172,11 @@ public class ParkingServiceTest {
 
         assertEquals(ParkingType.BIKE, result);
     }
-
+    
+    /**
+ * Tests the process of exiting a vehicle from the parking system with exception handling.
+ * This scenario checks if the method handles exceptions gracefully when retrieving ticket information.
+ */
     @Test
     public void processExitingVehicleExceptionHandling() {
         try {

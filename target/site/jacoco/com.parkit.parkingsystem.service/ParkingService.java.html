@@ -151,17 +151,17 @@ public class ParkingService {
 <span class="fc" id="L151">            Date outTime = new Date();</span>
 <span class="fc" id="L152">            ticket.setOutTime(outTime);</span>
     
-            // Vérifier si ce n'est pas le premier passage
+            // Check if it is not the first passage
 <span class="fc bfc" id="L155" title="All 2 branches covered.">            boolean isNotFirstPassage = nbTickets &gt; 1;</span>
     
-            // Appeler la méthode calculateFare avec un paramètre discount à true si ce n’est pas le premier passage
+            // Call the calculateFare method with a discount parameter set to true if it is not the first passage            
 <span class="fc bfc" id="L158" title="All 2 branches covered.">            if (isNotFirstPassage) {</span>
 <span class="fc" id="L159">                fareCalculatorService.calculateFare(ticket, true);</span>
 <span class="fc" id="L160">            } else {</span>
-<span class="fc" id="L161">                fareCalculatorService.calculateFare(ticket); // Si c'est le premier passage, pas de réduction</span>
+<span class="fc" id="L161">                fareCalculatorService.calculateFare(ticket); // If its the first passage, no discount</span>
             }
     
-            // Mettre à jour le ticket dans la base de données
+            // Update the ticket in the database
 <span class="fc bfc" id="L165" title="All 2 branches covered.">            if (ticketDAO.updateTicket(ticket)) {</span>
 <span class="fc" id="L166">                ParkingSpot parkingSpot = ticket.getParkingSpot();</span>
 <span class="fc" id="L167">                parkingSpot.setAvailable(true);</span>
