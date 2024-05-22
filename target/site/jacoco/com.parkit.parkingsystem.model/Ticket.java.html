@@ -3,70 +3,142 @@
 import java.util.Calendar;
 import java.util.Date;
 
-<span class="fc" id="L6">public class Ticket {</span>
+/**
+ * Represents a parking ticket in the parking system.
+ */
+<span class="fc" id="L9">public class Ticket {</span>
     private int id;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
     private double price;
     private Date inTime;
     private Date outTime;
-
-    public int getId() {
-<span class="fc" id="L15">        return id;</span>
-    }
-
-    public void setId(int id) {
-<span class="fc" id="L19">        this.id = id;</span>
-<span class="fc" id="L20">    }</span>
-
-    public ParkingSpot getParkingSpot() {
-<span class="fc" id="L23">        return parkingSpot;</span>
-    }
-
-    public void setParkingSpot(ParkingSpot parkingSpot) {
-<span class="fc" id="L27">        this.parkingSpot = parkingSpot;</span>
-<span class="fc" id="L28">    }</span>
-
-    public String getVehicleRegNumber() {
-<span class="fc" id="L31">        return vehicleRegNumber;</span>
-    }
-
-    public void setVehicleRegNumber(String vehicleRegNumber) {
-<span class="fc" id="L35">        this.vehicleRegNumber = vehicleRegNumber;</span>
-<span class="fc" id="L36">    }</span>
-
-    public double getPrice() {
-<span class="fc" id="L39">        return price;</span>
-    }
-
-    public void setPrice(double price) {
-<span class="fc" id="L43">        this.price = price;</span>
-<span class="fc" id="L44">    }</span>
-
-    public Date getInTime() {
-<span class="fc" id="L47">        return inTime;</span>
-    }
-
-    public void setInTime(Date inTime) {
-<span class="fc" id="L51">        this.inTime = inTime;</span>
-<span class="fc" id="L52">    }</span>
-
-    public Date getOutTime() {
-<span class="fc" id="L55">        return outTime;</span>
-    }
-
-    public void setOutTime(Date outTime) {
-<span class="fc" id="L59">        this.outTime = outTime;</span>
-<span class="fc" id="L60">    }</span>
-
     private boolean discount;
 
-    public void setDiscount(boolean discount) {
-<span class="fc" id="L65">        this.discount = discount;</span>
-<span class="fc" id="L66">    }</span>
+    /**
+     * Gets the identifier of the ticket.
+     *
+     * @return the ticket identifier
+     */
+    public int getId() {
+<span class="fc" id="L24">        return id;</span>
+    }
 
+    /**
+     * Sets the identifier of the ticket.
+     *
+     * @param id the new identifier for the ticket
+     */
+    public void setId(int id) {
+<span class="fc" id="L33">        this.id = id;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Gets the parking spot associated with the ticket.
+     *
+     * @return the parking spot
+     */
+    public ParkingSpot getParkingSpot() {
+<span class="fc" id="L42">        return parkingSpot;</span>
+    }
+
+    /**
+     * Sets the parking spot associated with the ticket.
+     *
+     * @param parkingSpot the new parking spot
+     */
+    public void setParkingSpot(ParkingSpot parkingSpot) {
+<span class="fc" id="L51">        this.parkingSpot = parkingSpot;</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Gets the vehicle registration number.
+     *
+     * @return the vehicle registration number
+     */
+    public String getVehicleRegNumber() {
+<span class="fc" id="L60">        return vehicleRegNumber;</span>
+    }
+
+    /**
+     * Sets the vehicle registration number.
+     *
+     * @param vehicleRegNumber the new vehicle registration number
+     */
+    public void setVehicleRegNumber(String vehicleRegNumber) {
+<span class="fc" id="L69">        this.vehicleRegNumber = vehicleRegNumber;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Gets the price of the ticket.
+     *
+     * @return the ticket price
+     */
+    public double getPrice() {
+<span class="fc" id="L78">        return price;</span>
+    }
+
+    /**
+     * Sets the price of the ticket.
+     *
+     * @param price the new ticket price
+     */
+    public void setPrice(double price) {
+<span class="fc" id="L87">        this.price = price;</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Gets the entry time of the ticket.
+     *
+     * @return the entry time
+     */
+    public Date getInTime() {
+<span class="fc" id="L96">        return inTime;</span>
+    }
+
+    /**
+     * Sets the entry time of the ticket.
+     *
+     * @param inTime the new entry time
+     */
+    public void setInTime(Date inTime) {
+<span class="fc" id="L105">        this.inTime = inTime;</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Gets the exit time of the ticket.
+     *
+     * @return the exit time
+     */
+    public Date getOutTime() {
+<span class="fc" id="L114">        return outTime;</span>
+    }
+
+    /**
+     * Sets the exit time of the ticket.
+     *
+     * @param outTime the new exit time
+     */
+    public void setOutTime(Date outTime) {
+<span class="fc" id="L123">        this.outTime = outTime;</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Sets whether the ticket is discounted.
+     *
+     * @param discount true if the ticket is discounted, false otherwise
+     */
+    public void setDiscount(boolean discount) {
+<span class="fc" id="L132">        this.discount = discount;</span>
+<span class="fc" id="L133">    }</span>
+
+    /**
+     * Checks if the ticket is discounted.
+     *
+     * @return true if the ticket is discounted, false otherwise
+     */
     public boolean isDiscounted() {
-<span class="nc" id="L69">        return discount;</span>
+<span class="nc" id="L141">        return discount;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
