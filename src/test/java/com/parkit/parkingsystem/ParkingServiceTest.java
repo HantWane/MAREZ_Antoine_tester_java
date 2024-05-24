@@ -82,7 +82,7 @@ public class ParkingServiceTest {
      * This includes selecting a parking spot, saving the ticket, and updating the parking spot.
      */
         @Test
-        public void testProcessIncomingVehicle(){
+        public void ProcessIncomingVehicleTest(){
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
         when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
@@ -120,7 +120,7 @@ public class ParkingServiceTest {
      */
 
     @Test
-    public void testGetNextParkingNumberIfAvailable(){
+    public void GetNextParkingNumberIfAvailable(){
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
 
@@ -136,7 +136,7 @@ public class ParkingServiceTest {
      */
 
     @Test
-    public void testGetNextParkingNumberIfAvailableParkingNumberNotFound(){
+    public void GetNextParkingNumberIfAvailableParkingNumberNotFound(){
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(0);
 
@@ -152,7 +152,7 @@ public class ParkingServiceTest {
      * This scenario checks if the method handles incorrect user input gracefully.
      */
     @Test
-    public void testGetNextParkingNumberIfAvailableParkingNumberWrongArgument(){
+    public void GetNextParkingNumberIfAvailableParkingNumberWrongArgument(){
         when(inputReaderUtil.readSelection()).thenReturn(3);
 
         parkingService.getNextParkingNumberIfAvailable();
@@ -165,7 +165,7 @@ public class ParkingServiceTest {
  * This includes simulating the selection of the bike type and obtaining the next available parking spot.
  */
     @Test
-    public void testGetNextParkingNumberIfAvailableForBike() {
+    public void GetNextParkingNumberIfAvailableForBike() {
         when(inputReaderUtil.readSelection()).thenReturn(2);
 
         ParkingType result = parkingService.getVehichleType();

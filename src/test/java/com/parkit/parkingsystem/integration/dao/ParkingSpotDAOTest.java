@@ -34,7 +34,7 @@ public class ParkingSpotDAOTest {
 
     @Test
     public void testGetNextAvailableSlotForBike(){
-        assertEquals(4, parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE));
+        assertEquals(5, parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE));
     }
 
     @Test

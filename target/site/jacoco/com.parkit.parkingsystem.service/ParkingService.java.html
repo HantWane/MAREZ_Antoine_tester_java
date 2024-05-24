@@ -57,7 +57,7 @@ public class ParkingService {
 <span class="fc" id="L57">                ticket.setOutTime(null);</span>
 
 <span class="fc" id="L59">                int ticketsCount = ticketDAO.getNbTicket(vehicleRegNumber);</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">                if (ticketsCount &gt; 0) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                if (ticketsCount &gt; 0) {</span>
 <span class="fc" id="L61">                    System.out.println(&quot;Happy to see you again! As a regular user of our parking, you will receive a 5% discount&quot;);</span>
                 }
 
@@ -143,12 +143,12 @@ public class ParkingService {
 <span class="fc" id="L143">            ticket.setOutTime(outTime);</span>
 
             // Check if it is not the first passage
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            boolean isNotFirstPassage = nbTickets &gt; 1;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            boolean isNotFirstPassage = nbTickets &gt; 1;</span>
 
             // Call the calculateFare method with a discount parameter set to true if it is not the first passage
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">            if (isNotFirstPassage) {</span>
-<span class="nc" id="L150">                fareCalculatorService.calculateFare(ticket, true);</span>
-<span class="nc" id="L151">            } else {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            if (isNotFirstPassage) {</span>
+<span class="fc" id="L150">                fareCalculatorService.calculateFare(ticket, true);</span>
+<span class="fc" id="L151">            } else {</span>
 <span class="fc" id="L152">                fareCalculatorService.calculateFare(ticket); // If it's the first passage, no discount</span>
             }
 

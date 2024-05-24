@@ -10,6 +10,7 @@ public class FareCalculatorService {
 
     // Constant for the discount rate
     private static final double DISCOUNT_RATE = 0.95;
+    private static final double FREE_PARKING_DURATION_MINUTES = 30;
 
     /**
      * Calculates the fare for a given ticket.
@@ -28,14 +29,11 @@ public class FareCalculatorService {
      * @param discount whether to apply a discount to the fare
      */
     public void calculateFare(Ticket ticket, boolean discount) {
-        // Validate ticket to ensure data consistency
         validateTicket(ticket);
-        // Calculate parking duration in minutes
         double durationMinutes = calculateDurationInMinutes(ticket);
         // Calculate fare rate based on vehicle type
         double fareRate = calculateFareRate(ticket);
-        // If parking duration is less than or equal to 30 minutes, fare is set to zero
-        if (durationMinutes <= 30) {
+        if (durationMinutes <= FREE_PARKING_DURATION_MINUTES) {
             ticket.setPrice(0);
             return;
         }
