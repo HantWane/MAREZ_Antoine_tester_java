@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FareCalculatorService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parking-system</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">FareCalculatorService.java</span></div><h1>FareCalculatorService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
+
+import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.model.Ticket;
+
+/**
+ * Service to calculate the fare for parking based on the ticket information.
+ */
+<span class="fc" id="L9">public class FareCalculatorService {</span>
+
+    // Constant for the discount rate
+    private static final double DISCOUNT_RATE = 0.95;
+    private static final double FREE_PARKING_DURATION_MINUTES = 30;
+
+    /**
+     * Calculates the fare for a given ticket.
+     * 
+     * @param ticket the ticket for which the fare is to be calculated
+     */
+    public void calculateFare(Ticket ticket) {
+        // Call calculate method with default discount parameter set to false
+<span class="fc" id="L22">        calculateFare(ticket, false);</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Calculates the fare for a given ticket, with an option to apply a discount.
+     * 
+     * @param ticket the ticket for which the fare is to be calculated
+     * @param discount whether to apply a discount to the fare
+     */
+    public void calculateFare(Ticket ticket, boolean discount) {
+<span class="fc" id="L32">        validateTicket(ticket);</span>
+<span class="fc" id="L33">        double durationMinutes = calculateDurationInMinutes(ticket);</span>
+        // Calculate fare rate based on vehicle type
+<span class="fc" id="L35">        double fareRate = calculateFareRate(ticket);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (durationMinutes &lt;= FREE_PARKING_DURATION_MINUTES) {</span>
+<span class="fc" id="L37">            ticket.setPrice(0);</span>
+<span class="fc" id="L38">            return;</span>
+        }
+        // If discount is enabled, apply discount rate
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (discount) {</span>
+<span class="fc" id="L42">            fareRate *= DISCOUNT_RATE;</span>
+        }
+        // Calculate total price of the ticket
+<span class="fc" id="L45">        ticket.setPrice(durationMinutes * fareRate / 60);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Validates the ticket and its data.
+     * 
+     * @param ticket the ticket to validate
+     * @throws IllegalArgumentException if the out time is before the in time or is null
+     */
+    private void validateTicket(Ticket ticket) {
+        // Check if out time is valid and after the in time
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">        if (ticket.getOutTime() == null || ticket.getOutTime().before(ticket.getInTime())) {</span>
+            // Throw exception if out time is invalid
+<span class="fc" id="L58">            throw new IllegalArgumentException(&quot;Invalid out time provided: &quot; + ticket.getOutTime());</span>
+        }
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Calculates the parking duration in minutes based on the ticket information.
+     * 
+     * @param ticket the ticket for which the duration is to be calculated
+     * @return the parking duration in minutes
+     */
+    private double calculateDurationInMinutes(Ticket ticket) {
+<span class="fc" id="L69">        long inTimeMillis = ticket.getInTime().getTime();</span>
+<span class="fc" id="L70">        long outTimeMillis = ticket.getOutTime().getTime();</span>
+<span class="fc" id="L71">        return (outTimeMillis - inTimeMillis) / 60000.0;</span>
+    }
+
+    /**
+     * Calculates the fare rate based on the vehicle type.
+     * 
+     * @param ticket the ticket for which the fare rate is to be calculated
+     * @return the fare rate per hour
+     * @throws IllegalArgumentException if the parking type is unknown
+     */
+    private double calculateFareRate(Ticket ticket) {
+<span class="pc bpc" id="L82" title="1 of 3 branches missed.">        switch (ticket.getParkingSpot().getParkingType()) {</span>
+            case CAR:
+<span class="fc" id="L84">                return Fare.CAR_RATE_PER_HOUR;</span>
+            case BIKE:
+<span class="fc" id="L86">                return Fare.BIKE_RATE_PER_HOUR;</span>
+            default:
+<span class="nc" id="L88">                throw new IllegalArgumentException(&quot;Unknown Parking Type&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
